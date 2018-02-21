@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maintenance Date Estimator</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    {{ message }}
+    <br>
+    <input v-model="inputText"><br>
+    <table>
+      <thead>
+        <tr>
+          <th>Part/System</th>
+          <th>Mileage Interval in Miles</th>
+          <th>Time Interval in Months</th>
+          <th>Estimated miles remaining before interval end</th>
+          <th>Estimated Service date</th>
+        </tr>
+      </thead>
+      <maintenance-item-row 
+        v-for="item in maintenanceList"
+        v-bind:item="item"
+        v-bind:key="item.id"
+      ></maintenance-item-row>
+    </table>
+  </div>
+
+  <script>
+      Vue.component('maintenance-item-row', {
+        props: ['item'],
+        template: '<tr id="{{item.name}}">\n<td>{{item.name}}</td>\n<td>{{item.mileageInterval}}</td>\n<td>{{item.elapsedTimeInterval}}</td>\n<input id="estimatedMileage" v-model="estimatedMileage">\n<input id="estimatedDate" v-model="estimatedDate"></tr>'
+      })
+
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Maintenance Date Estimator',
+        inputText: 'Enter Current Mileage',
+        estimatedMileage: 'Estimated Mileage',
+        estimatedDate: 'Estimated Date',
+        maintenanceList: [
+          {id: 0, name: 'Engine Oil & Filter', mileageInterval: '6000', elapsedTimeInterval: '6'}, //miles, months
+          {id: 1, name: 'Spark Plug', mileageInterval: '60000', elapsedTimeInterval: '60'},
+          {id: 2, name: 'Check Drive Belts', mileageInterval: '30000', elapsedTimeInterval: '30'},
+          {id: 3, name: 'Check Fuel Systems, Lines & Connections', mileageInterval: '30000', elapsedTimeInterval: '30'},
+          {id: 4, name: 'Fuel Filter', mileageInterval: '72000', elapsedTimeInterval: '72'},
+          {id: 5, name: 'Air Cleaner Element', mileageInterval: '30000', elapsedTimeInterval: '30'},
+          {id: 6, name: 'Check Cooling System, Hoses & Connections', mileageInterval: '30000', elapsedTimeInterval: '30'},
+          {id: 7, name: 'Engine Coolant', mileageInterval: '220000', elapsedTimeInterval: '132'},
+          {id: 8, name: 'Check Clutch Operation', mileageInterval: '12000', elapsedTimeInterval: '12'},
+          {id: 9, name: 'Check Transmission gear oil', mileageInterval: '30000', elapsedTimeInterval: '30'},
+          {id: 10, name: 'Check CVT fluid', mileageInterval: '30000', elapsedTimeInterval: '30'},
+          {id: 11, name: 'Check Front & Rear Differential gear oil', mileageInterval: '30000', elapsedTimeInterval: '30'},
+          {id: 12, name: 'Check Brake Lines, Operation of Parking and Service Brake Systems', mileageInterval: '12000', elapsedTimeInterval: '12'},
+          {id: 13, name: 'MT Brake Fluid/Clutch Fluid', mileageInterval: '30000', elapsedTimeInterval: '30'},
+          {id: 14, name: 'Check Disc Brake pad & disc, front & rear axle boots & joints', mileageInterval: '12000', elapsedTimeInterval: '12'},
+          {id: 15, name: 'Check Steering & Suspension', mileageInterval: '12000', elapsedTimeInterval: '12'},
+          {id: 16, name: 'Check Wheel bearing', mileageInterval: '60000', elapsedTimeInterval: '60'},
+          {id: 17, name: 'Rotate & inspect Tires', mileageInterval: '6000', elapsedTimeInterval: '6'},
+          {id: 18, name: 'HVAC system A/C filter', mileageInterval: '12000', elapsedTimeInterval: '12'}
+          
+        ]
+      }
+    })
+  </script>
+</body>
+</html>

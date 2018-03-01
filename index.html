@@ -32,7 +32,7 @@
   <script>
       Vue.component('maintenance-item-row', {
         props: ['item'],
-        template: '<tr v-bind:id="item.name">\n<td>{{item.name}}</td>\n<td>{{item.mileageInterval}}</td>\n<td>{{item.elapsedTimeInterval}}</td>\n<input v-bind:id="estimatedMileage" v-model="estimatedMileage">\n<input v-bind:id="estimatedDate" v-model="estimatedDate"></tr>'
+        template: '<tr v-bind:id="item.name">\n<td>{{item.name}}</td>\n<td>{{item.mileageInterval}}</td>\n<td>{{item.elapsedTimeInterval}}</td>\n<td><input v-bind:id="estimatedMileage" v-model="estimatedMileage"></td>\n<td><input v-bind:id="estimatedDate" v-model="estimatedDate"></td></tr>'
       })
 
 

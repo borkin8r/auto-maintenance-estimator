@@ -19,18 +19,20 @@
           <th>Estimated Service date</th>
         </tr>
       </thead>
-      <maintenance-item-row 
+      <tbody>
+        <tr is="maintenance-item-row" 
         v-for="item in maintenanceList"
         v-bind:item="item"
         v-bind:key="item.id"
-      ></maintenance-item-row>
+      ></tr>
+      </tbody>
     </table>
   </div>
 
   <script>
       Vue.component('maintenance-item-row', {
         props: ['item'],
-        template: '<tr id="{{item.name}}">\n<td>{{item.name}}</td>\n<td>{{item.mileageInterval}}</td>\n<td>{{item.elapsedTimeInterval}}</td>\n<input id="estimatedMileage" v-model="estimatedMileage">\n<input id="estimatedDate" v-model="estimatedDate"></tr>'
+        template: '<tr v-bind:id="item.name">\n<td>{{item.name}}</td>\n<td>{{item.mileageInterval}}</td>\n<td>{{item.elapsedTimeInterval}}</td>\n<input v-bind:id="estimatedMileage" v-model="estimatedMileage">\n<input v-bind:id="estimatedDate" v-model="estimatedDate"></tr>'
       })
 
 

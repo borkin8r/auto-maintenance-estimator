@@ -8,15 +8,16 @@
   <div id="app">
     {{ message }}
     <br>
-    <input v-model="inputText"><br>
+    <input v-model="inputText" \
+      v-on:input="updateEstimates($event.target.value)"><br>
     <table>
       <thead>
         <tr>
           <th>Part/System</th>
           <th>Mileage Interval in Miles</th>
           <th>Time Interval in Months</th>
-          <th>Estimated miles remaining before interval end</th>
-          <th>Estimated Service date</th>
+          <th>Estimated Miles Remaining Before Interval End</th>
+          <th>Estimated Next Service Date</th>
         </tr>
       </thead>
       <tbody>
@@ -32,8 +33,38 @@
   <script>
       Vue.component('maintenance-item-row', {
         props: ['item'],
-        template: '<tr v-bind:id="item.name">\n<td>{{item.name}}</td>\n<td>{{item.mileageInterval}}</td>\n<td>{{item.elapsedTimeInterval}}</td>\n<td><input v-bind:id="estimatedMileage" v-model="estimatedMileage"></td>\n<td><input v-bind:id="estimatedDate" v-model="estimatedDate"></td></tr>'
-      })
+        template: '\
+          <tr v-bind:id="item.name">\n\
+          <td>{{item.name}}</td>\n\
+          <td>{{item.mileageInterval}}</td>\n\
+          <td>{{item.elapsedTimeInterval}}</td>\n\
+          <td><input ref="estimatedMileage" v-bind:id="estimatedMileage" v-model="estimatedMileage"></td>\n\
+          <td><input v-bind:id="estimatedDate" v-model="estimatedDate"></td></tr>\
+          ',
+          methods: {
+            updateEstimates: function (updatedMileage) {
+              var item = {}; //get from props? form inputs using custom events
+
+              this.$emit('estimatedMileage', Number(updatedMileage / item.mileageInterval));
+            }
+          }
+      });
+
+      Vue.component('mileage-input', {
+        template: '\
+        Enter Current Mileage\
+        <input\
+          ref="currentMileage"\
+          v-bind:value="value"\
+          v-on:input="updateEstimates($event.target.currentMileage)">\
+        ',
+        props: ['value'],
+        methods: {
+          updateEstimates: function (newMileage) {
+            //TODO: handle updating estimates, emit event to maintenence item row?
+          }
+        }
+      });
 
 
     var app = new Vue({
@@ -63,7 +94,6 @@
           {id: 16, name: 'Check Wheel bearing', mileageInterval: '60000', elapsedTimeInterval: '60'},
           {id: 17, name: 'Rotate & inspect Tires', mileageInterval: '6000', elapsedTimeInterval: '6'},
           {id: 18, name: 'HVAC system A/C filter', mileageInterval: '12000', elapsedTimeInterval: '12'}
-          
         ]
       }
     })
